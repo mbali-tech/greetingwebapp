@@ -10,9 +10,9 @@ const app = express()
 const pgPromise = require('pg-promise')({})
 const db = pgPromise({
  connectionString:process.env.DATABASE_URL || 'postgres://postgres:2007121214@localhost:5432/greetings', 
-  //ssl: {
-  //  rejectUnauthorized: false
-  //}
+  ssl: {
+    rejectUnauthorized: false
+  }
 })
 
 const GreetFactory = require('./namesGreeted')
