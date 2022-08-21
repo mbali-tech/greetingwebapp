@@ -1,0 +1,38 @@
+<h1>Greeting</h1>
+<section class="text">
+  <div class="counter-section">
+    <form id="nameInput" action="/name" method="POST">
+      <div class="name-container">
+        <p>Name <input type="text" name="name" id="name" /></p>
+      </div>
+      <div class="radio-container">
+        <input type="radio" name="language" value="IsiZulu" />
+        <label for="language">IsiZulu</label>
+        <input type="radio" name="language" value="IsiXhosa" />
+        <label for="language">IsiXhosa</label>
+        <input type="radio" name="language" value="English" />
+        <label for="language">English</label>
+      </div>
+      <input type="submit" id="submit" value="Greet Me" />
+      <p class="counter">Counter: {{counter}}</p>
+      {{#if message}}
+        <p class="greeting"></p>
+      {{else}}
+        <p class="greeting">{{greetText}}{{name}}</p>
+      {{/if}}
+    </form>
+  </div>
+  <div class="radio-section">
+    <form action="/counter" method="post">
+      <input type="submit" id="reset" value="Reset Counter" />
+    </form>
+    <form action="/greeted" method="post">
+      <input type="submit" id="greetList" value="Greeted Names" />
+    </form>
+  </div>
+  {{#if message}}
+    <div class="entry">
+      <h1>{{message}}</h1>
+    </div>
+  {{/if}}
+</section>

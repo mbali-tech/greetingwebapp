@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 62.5%;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+div.row {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 50%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    height: 3rem;
+    list-style: none;
+}
+
+li:hover {
+    color: #000;
+}
+
+.entry {
+    position: absolute;
+    top: 0;
+    color: red;
+    font-weight: 800;
+    background: hsl(0, 0%, 100%);
+    animation: cssAnimation 0s ease-in 2s forwards;
+
+}
+
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+ul li a {
+    text-decoration: none;
+    font-size: 2rem;
+    color: #eee;
+}
+
+ul li a:hover {
+    background: #eee;
+    color: #000;
+}
+
+#greetList {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+}
+
+section.widget {
+    height: 75vh;
+    width: 60vw;
+    position: relative;
+    box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    background:rgba(255, 255, 255, 0.1);    
+    display: flex;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    color: #eee;
+}
+
+section.text {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 200;
+}
+
+p, input {
+    font-size: 2rem;
+    background: none;
+}
+
+input {
+    border: 1px solid #eee;
+}
+
+.counter-section {
+    position: absolute;
+    top: 10%;
+    display: flex;
+    height: 80%;
+    align-items: center;
+}
+
+form#nameInput {
+    display: flex;
+    position: relative;
+    padding-top: 2rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+
+
+
+form > * {
+    margin: 10px;
+}
+
+.counter {
+    font-size: 2rem;
+    position: absolute;
+    top: 47%;
+}
+
+.greeting {
+    position: absolute;
+    bottom: 10%;
+    animation: cssAnimation 0s ease-in 2s forwards;
+}
+
+input[type="submit"], input[type="button"] {
+    background:rgba(116, 111, 111, 0.5);
+    align-self: center;
+    padding: 0.5rem;
+    outline: #1fa0b1;
+    border: none;
+    cursor: pointer;
+    color: #eee;
+    border-radius: 1rem;
+    width: 20rem;
+}
+
+input[type="submit"]:hover {
+    background: #1fa0b1;
+}
+
+input[name="name"]{
+    color: #eee;
+}
+
+label {
+    font-size: 2rem;
+    padding: 0 20px;
+}
+
+#reset {
+    position: absolute;
+    top:60%;
+    left: 25%;
+}
+
+@media screen and (max-width: 678px){
+    .greeting {
+        margin-top: 0;
+    }
+
+    section.text {
+        margin-top: 0;
+    }
+
+    input[type="submit"] {
+        margin-top: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p, input {
+        font-size: 1.5rem;
+    }
+
+    .counter {
+        font-size: 1.5rem;
+    }
+
+    label {
+        font-size: 1.5rem;
+        padding: 0 1.2rem;
+    }
+
+}
