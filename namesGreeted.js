@@ -3,7 +3,7 @@ module.exports = (db) => {
 
     const setName = async (name) => {
         username = name.toLowerCase().trim()
-        db.query("insert into users(name) values($1)", [username])
+        await db.none("insert into users(name) values($1)", [username])
     }
 
     const getName = () => {
@@ -11,22 +11,22 @@ module.exports = (db) => {
     }
 
     const namesList = async () => {
-        let list = await db.query("select distinct name from users")
+        let list = await db.manyOrNone("select distinct name from users")
         return list
     }
 
     const nameCount = async () => {
-        let names = await db.query("select count( distinct name ) from users")
-        return names[0].count
+        let names = await db.one("select count( distinct name ) from users")
+        return names.count
     }
 
     const greetCount = async (user) => {
-        let counter = await db.query("select count(*) from users where name=$1", [user])
-        return counter[0].count
+        let counter = await db.one("select count(*) from users where name=$1", [user])
+        return counter.count
     }
 
-    const removeNames = () => {
-        db.query("delete from users")
+    const removeNames = async () => {
+        await db.none("delete from users")
     }
 
     return {

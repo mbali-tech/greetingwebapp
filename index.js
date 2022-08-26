@@ -17,9 +17,11 @@ const db = pgPromise({
 
 const GreetFactory = require('./namesGreeted')
 const LanguageFactory = require('./languagePicker')
+const Routes = require('./routes')
 
 const namesGreeted = GreetFactory(db)
 const languagePicker = LanguageFactory()
+const routes = Routes(namesGreeted, languagePicker)
 
 // initialise session middleware - flash-express depends on it
 app.use(session({
@@ -39,55 +41,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //gets values for counter value and greeting text
-app.get('/', async (req, res) => {
-  let counter = await namesGreeted.nameCount()
-  res.render('index', {
-      name: namesGreeted.getName().charAt(0).toUpperCase()+namesGreeted.getName().slice(1, namesGreeted.getName().length),
-      greetText: languagePicker.getGreetText(),
-      counter: counter,
-      message: req.flash('warning')
-  })
-})
+app.get('/', routes.home)
 
 //sets values for name, language uses and stores name of greeted person in database
-app.post("/name", async(req, res) => {
-  if(!req.body.language && req.body.name == ""){
-      req.flash('warning', 'Please enter name and language')
-  }else if(req.body.name == ""){
-      req.flash('warning', 'Please enter name')
-  }else if(!/^[A-Za-z]+$/.test(req.body.name)){
-      req.flash('warning', 'Please enter valid name')
-  }else if(!req.body.language){
-      req.flash('warning', 'Please choose language')
-  }else {
-      await namesGreeted.setName(req.body.name)
-      languagePicker.setLanguage(req.body.language)
-      languagePicker.setGreetText()
-  }
-  res.redirect("/")
-})
+app.post("/name", routes.greet)
 
 //empties database and resets counter
-app.post("/counter", async(req, res) => {
-  await namesGreeted.removeNames()
-  req.flash('warning', 'Counter Cleared')
-  res.redirect("/")
-})
+app.post("/counter", routes.clear)
 
-app.post("/greeted", async (req, res) => {
-  let names = await namesGreeted.namesList()
-  res.render('greeted',{
-    uniqueNames: names
-  })
-})
+app.post("/greeted", routes.greeted)
 
-app.get("/greeted/:name", async(req, res) => {
-  let counter = await namesGreeted.greetCount( req.params.name,)
-  res.render("counter", {
-    nameGreeted: req.params.name,
-    counter: counter
-  })
-})
+app.get("/greeted/:name", routes.greetedUser)
 
 const PORT = process.env.PORT || 3011
 

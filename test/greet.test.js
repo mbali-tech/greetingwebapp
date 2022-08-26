@@ -1,61 +1,60 @@
 const assert = require('assert');
 
-const Greet = require('../greetings');
+const GreetFactory = require('../namesGreeted');
+
+// initialise the database connection
+const pgPromise = require('pg-promise')({})
+const db = pgPromise({
+ connectionString:process.env.DATABASE_URL || 'postgres://postgres:2007121214@localhost:5432/greetings_test', 
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
 
 
+describe("Testing database logic", function(){
 
-
-describe("The Greeting massages", function () {
-
-    it("should display (Hello, name) if the name is entered and the selected language is english", function () {
-
-        const greetedName = Greet()
-        assert.equal("Hello, Max", greetedName.getLanguage("Max", "english"))
-
-    });
-    it("should display (Molo, name) if the name is entered and the language is isixhosa", function () {
-
-        const greetedName = Greet()
-        assert.equal("Molo, Xola", greetedName.getLanguage("Xola", "isixhosa"))
-
-    });
-    it("should display (Dumela, name) if the language is selected ", function () {
-
-        const greetedName = Greet()
-        assert.equal("Dumela, Tloki", greetedName.getLanguage("Tloki", "sesotho"))
-
+    beforeEach(async function(){
+        await db.none('delete from users')
     });
 
+    it('should be able to add users to users table', async function(){
+        const nameGreeted = GreetFactory(db);
 
-});
-describe("Please Select language massages",function(){
+        await nameGreeted.setName("Mbali");
 
-    it("should display (please select languge) if the name is passed and the lanuge is not passed",function(){
-
-        const greetedName = Greet()
-        assert.equal("Please select a language",greetedName.errorMessage("Tloki" ,"") )
-
+        assert.equal(1, await nameGreeted.nameCount());
     });
-   
-});
 
-describe("The invelid massages",function(){
+    it('should be able to get list of greeted names', async function(){
+        const nameGreeted = GreetFactory(db);
 
-    it("should display (please enter a valid name) if the is no name given",function(){
+        await nameGreeted.setName("Mbali");
+        await nameGreeted.setName("Xola");
 
-        const greetedName = Greet()
-        assert.equal("Please enter your name",greetedName.errorMessage("","english") )
-
+        let nameList = await nameGreeted.namesList();
+        assert.equal(2, nameList.length);
     });
-   
-});
-describe("The invelid massages",function(){
 
-    it("should display (please Enter Name and language) if the is no name passed and no languge selected",function(){
+    it('should be able to get count of all none repeating names', async function(){
+        const nameGreeted = GreetFactory(db);
 
-        const greetedName = Greet()
-        assert.equal("Please select a language",greetedName.errorMessage(" ","") )
+        await nameGreeted.setName("Mbali");
+        await nameGreeted.setName("Xola");
+        await nameGreeted.setName("Mbali");
+        await nameGreeted.setName("Xola");
 
+        assert.equal(2, await nameGreeted.nameCount());
     });
-   
+
+    it('should be to get counter of selected name', async function(){
+        const nameGreeted = GreetFactory(db);
+
+        await nameGreeted.setName("mbali");
+        await nameGreeted.setName("mbali");
+        await nameGreeted.setName("xola");
+
+        assert.equal(2, await nameGreeted.greetCount("mbali"));
+        assert.equal(1, await nameGreeted.greetCount("xola"));
+    });
 });
