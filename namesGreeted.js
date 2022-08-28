@@ -26,8 +26,8 @@ module.exports = (db) => {
         return names.count
     }
 
-    const greetCount = async (user) => {
-        let user = await db.one("select * from users where name=$1", [user])
+    const greetCount = async (username) => {
+        let user = await db.one("select * from users where name=$1", [username])
         return user.counter
     }
 
