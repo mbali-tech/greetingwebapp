@@ -4,6 +4,7 @@ module.exports = (db) => {
     const setName = async (name) => {
         username = name.toLowerCase().trim()
         let counter =  db.manyOrNone("select count(*) from users where name=$1", [username])
+        console.log (counter)
         if (counter == null){
             await db.none("insert into users(name,counter) values($1,1)", [username])
         }
