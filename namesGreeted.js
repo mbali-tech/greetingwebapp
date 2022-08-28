@@ -3,7 +3,13 @@ module.exports = (db) => {
 
     const setName = async (name) => {
         username = name.toLowerCase().trim()
-        await db.none("insert into users(name) values($1)", [username])
+        let counter =  db.one("select count(*) from users where name=$1", [username])
+        if (counter.count ==0){
+            await db.none("insert into users(name,counter) values($1,1)", [username])
+        }
+        else {
+            await db.none("update users set counter = counter + 1 where name=$1", [username])
+        }
     }
 
     const getName = () => {
