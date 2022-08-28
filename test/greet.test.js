@@ -6,9 +6,7 @@ const GreetFactory = require('../namesGreeted');
 const pgPromise = require('pg-promise')({})
 const db = pgPromise({
  connectionString:process.env.DATABASE_URL || 'postgres://postgres:2007121214@localhost:5432/greetings_test', 
-  //ssl: {
-  //  rejectUnauthorized: false
-  //}
+  
 })
 
 
