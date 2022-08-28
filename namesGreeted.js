@@ -16,13 +16,13 @@ module.exports = (db) => {
     }
 
     const nameCount = async () => {
-        let names = await db.one("select count( distinct name ) from users")
+        let names = await db.one("select count(*) from users")
         return names.count
     }
 
     const greetCount = async (user) => {
-        let counter = await db.one("select count(*) from users where name=$1", [user])
-        return counter.count
+        let user = await db.one("select * from users where name=$1", [user])
+        return user.counter
     }
 
     const removeNames = async () => {
