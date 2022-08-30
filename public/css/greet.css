@@ -13,6 +13,7 @@ body {
     height: 100vh;
     width: 100vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: #000;
@@ -25,6 +26,7 @@ div.row {
     height: 50%;
     justify-content: flex-start;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 ul {
@@ -51,6 +53,15 @@ li:hover {
 
 }
 
+div.nav {
+    display: flex;
+}
+
+div.nav h1 {
+    padding: 10px;
+    color: white;
+}
+
 @keyframes cssAnimation {
     to {
         width:0;
@@ -67,12 +78,6 @@ ul li a {
 ul li a:hover {
     background: #eee;
     color: #000;
-}
-
-#greetList {
-    position: absolute;
-    top: 60%;
-    left: 50%;
 }
 
 section.widget {
@@ -177,10 +182,13 @@ label {
 #reset {
     position: absolute;
     top:60%;
-    left: 25%;
+    left: 36%;
 }
 
 @media screen and (max-width: 678px){
+    section.widget {
+        width: 90vw;
+    }
     .greeting {
         margin-top: 0;
     }
@@ -209,10 +217,8 @@ label {
         font-size: 1.5rem;
         padding: 0 1.2rem;
     }
-    #greetList {
-        position: absolute;
-        top: 90%;
-        right: 50%;
 
-}
+    #reset {
+        left: 18%;
+    }
 }
