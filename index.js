@@ -49,7 +49,7 @@ app.post("/name", routes.greet)
 //empties database and resets counter
 app.post("/counter", routes.clear)
 
-app.post("/greeted", routes.greeted)
+app.get("/greeted", routes.greeted)
 
 app.get("/greeted/:name", routes.greetedUser)
 
